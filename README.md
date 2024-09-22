@@ -1,58 +1,68 @@
-### EX3 Implementation of GSP Algorithm In Python
-### DATE: 
-### AIM: To implement GSP Algorithm In Python.
-### Description:
+# EX3 Implementation of GSP Algorithm In Python
+# AIM: To implement GSP Algorithm In Python.
+# Description:
+
 The Generalized Sequential Pattern (GSP) algorithm is a data mining technique used for discovering frequent patterns within a sequence database. It operates by identifying sequences that frequently occur together. GSP works by employing a depth-first search strategy to explore and extract frequent patterns efficiently.
-### Steps:
-1. <strong>Database Scanning:</strong> GSP scans the sequence database to determine the support of each item in the dataset.
-2. <strong>Candidate Generation:</strong> It generates a set of candidate sequences using frequent items found in the previous step.
-3. <strong>Pattern Growth:</strong> It extends the candidate sequences by merging them to form longer patterns, checking their support against a user-defined minimum support threshold.
-4. <strong>Repeat:</strong> The process continues until no new sequences meet the minimum support threshold.
-<p align="justify">
+# Steps:
+
+    1. Database Scanning: GSP scans the sequence database to determine the support of each item in the dataset.
+    2. Candidate Generation: It generates a set of candidate sequences using frequent items found in the previous step.
+    3. Pattern Growth: It extends the candidate sequences by merging them to form longer patterns, checking their support against a user-defined minimum support threshold.
+    4. Repeat: The process continues until no new sequences meet the minimum support threshold.
+
 GSP finds application in various domains such as market basket analysis, web usage mining, bioinformatics, and more. For instance, in retail, GSP can identify common purchasing patterns, helping businesses understand customer behavior for targeted marketing or inventory management.
-</p>
+# Procedure:
 
-### Procedure:
-<p align="justify"> 
-1. From collections import defaultdict, from itertools import combinations: Imports necessary libraries/modules. defaultdict is
-used to create a dictionary with default values and combinations generates all possible combinations of a sequence.</p>
-<p align="justify">
-2. generate_candidates(dataset, k): Function to generate candidate k-item sequences from a dataset. It loops through each sequence in the
-dataset and finds combinations of length k for each sequence, updating their counts in a dictionary.</p>
-<p align="justify">
-3. gsp(dataset, min_support): Function that implements the Generalized Sequential Pattern (GSP) algorithm. It iterates through increasing
-sequence lengths (k) until no new frequent patterns are found. It calls generate_candidates() to find patterns of varying lengths.</p>
-<p align="justify">
-4. Example dataset for each category: Defines example sequences for top wear, bottom wear, and party wear categories.</p>
-<p align="justify">
-5. Minimum support threshold: Sets the minimum support count required for a pattern to be considered frequent.</p>
-<p align="justify">
-6. Perform GSP algorithm for each category: Applies the GSP algorithm for each category using the defined example datasets and the
-minimum support threshold.</p>
-<p align="justify">
-7. Output the frequent sequential patterns for each category: Prints the frequent sequential patterns 
-    along with their support counts
-for each wear category.</p>
-<p align="justify">
+1. From collections import defaultdict, from itertools import combinations: Imports necessary libraries/modules. defaultdict is used to create a dictionary with default values and combinations generates all possible combinations of a sequence.
+
+2. generate_candidates(dataset, k): Function to generate candidate k-item sequences from a dataset. It loops through each sequence in the dataset and finds combinations of length k for each sequence, updating their counts in a dictionary.
+
+3. gsp(dataset, min_support): Function that implements the Generalized Sequential Pattern (GSP) algorithm. It iterates through increasing sequence lengths (k) until no new frequent patterns are found. It calls generate_candidates() to find patterns of varying lengths.
+
+4. Example dataset for each category: Defines example sequences for top wear, bottom wear, and party wear categories.
+
+5. Minimum support threshold: Sets the minimum support count required for a pattern to be considered frequent.
+
+6. Perform GSP algorithm for each category: Applies the GSP algorithm for each category using the defined example datasets and the minimum support threshold.
+
+7. Output the frequent sequential patterns for each category: Prints the frequent sequential patterns along with their support counts for each wear category.
+
 8. Visulaize the sequence patterns using matplotlib.
-</p>
-### Program:
-
-```python
+# Program:
+```
 from collections import defaultdict
 from itertools import combinations
 # Function to generate candidate k-item sequences
 def generate_candidates(dataset, k):
+ candidate_count = defaultdict(int)
 
+    for sequence in dataset:
+        for itemset in combinations(sequence, k):
+            candidate_count[itemset] += 1
 
-    /WRITE YOUR CODE HERE/
-
+    return candidate_count
 
 #Function to perform GSP algorithm
 def gsp(dataset, min_support):
+    # Step 1: Initialize the frequent patterns dictionary
+    frequent_patterns = defaultdict(int)
 
+    # Step 2: Generate frequent 1-item sequences
+    k = 1
+    candidate_count = generate_candidates(dataset, k)
 
-  /WRITE YOUR CODE HERE/
+    # Step 3: Prune and update frequent patterns
+    frequent_patterns.update({itemset: count for itemset, count in candidate_count.items() if count >= min_support})
+
+    # Step 4: Generate frequent k-item sequences until no more can be generated
+    while candidate_count:
+        k += 1
+        candidate_count = generate_candidates(dataset, k)
+
+        # Prune and update frequent patterns
+        frequent_patterns.update({itemset: count for itemset, count in candidate_count.items() if count >= min_support})
+
+    return frequent_patterns
 
 
 #Example dataset for each category
@@ -101,10 +111,11 @@ if party_wear_result:
 else:
  print("No frequent sequential patterns found in Party Wear.")
 ```
-### Output:
+# Output:
+![1](https://github.com/user-attachments/assets/7e2ac427-2f6d-4227-96d5-728cfd670bab)
 
-### Visualization:
-```python
+# Visualization:
+```
 import matplotlib.pyplot as plt
 
 # Function to visualize frequent sequential patterns with a line plot
@@ -129,7 +140,10 @@ visualize_patterns_line(top_wear_result, 'Top Wear')
 visualize_patterns_line(bottom_wear_result, 'Bottom Wear')
 visualize_patterns_line(party_wear_result, 'Party Wear')
 ```
-### Output:
 
+# Output:
+![2](https://github.com/user-attachments/assets/5fb0310d-a1f2-44b8-b5b8-f85ce94def68)
+![3](https://github.com/user-attachments/assets/ef174890-4f48-4863-a00a-5a5cf8da1c1a)
 
-### Result:
+# Result:
+Thus, the implementation of the GSP algorithm in Python has been successfully executed.
