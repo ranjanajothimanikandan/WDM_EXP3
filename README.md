@@ -13,7 +13,7 @@ GSP finds application in various domains such as market basket analysis, web usa
 </p>
 
 ### Procedure:
-<p align="justify">
+<p align="justify"> 
 1. From collections import defaultdict, from itertools import combinations: Imports necessary libraries/modules. defaultdict is
 used to create a dictionary with default values and combinations generates all possible combinations of a sequence.</p>
 <p align="justify">
